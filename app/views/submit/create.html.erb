@@ -1,2 +1,6 @@
-<h1>Submit#create</h1>
-<p>Find me in app/views/submit/create.html.erb</p>
+<h3>You can access your message from:</h3>
+<p>
+    <%= request.base_url + '/message/' + @path %>
+</p>
+
+<%# link_to(url = '', %>
