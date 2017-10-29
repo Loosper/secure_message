@@ -1,0 +1,4 @@
+<%= form_tag("/submit", method: "post") do %>
+  <%= text_area_tag(:message, "Enter a message", size: "100x6") %>
+  <%= submit_tag("Send") %>
+<% end %>
