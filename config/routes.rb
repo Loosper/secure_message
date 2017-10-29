@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'message/show'
-
   get '/', to: 'submit#new'
   # to displat a specific one
   get '/message/:id', to: 'message#show'
