@@ -1,4 +1,5 @@
 <%= form_tag("/submit", method: "post") do %>
+<!-- multipart: true? -->
   <%= text_area_tag(:message, '', placeholder: "Enter message", size: "100x6") %>
   <!-- there must be a way to make rails do that automatically -->
   <br>
