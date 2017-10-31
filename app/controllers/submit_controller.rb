@@ -1,7 +1,7 @@
 require('digest')
 
 class SubmitController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
   def new
   end
 
@@ -13,8 +13,8 @@ class SubmitController < ApplicationController
       link: @path
     ).save
 
-    # render plain: message.id
-    # redirect_to action: 'show'
-    # @path = Digest::SHA1.base64digest(params[:message])
+    if request.env['PATH_INFO'] == '/notes/api'
+      render plain: request.base_url + '/message/' + @path
+    end
   end
 end

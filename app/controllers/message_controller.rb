@@ -1,5 +1,5 @@
 class MessageController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
   def show
     begin
       msg_obj = Message.find_by(link: params[:id])

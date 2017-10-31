@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   # to displat a specific one
   get '/message/:id', to: 'message#show'
   post '/submit/', to: 'submit#create'
-  post '/notes/api/', to: 'api#create'
+  post '/notes/api/', to: 'submit#create'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
