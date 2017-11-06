@@ -6,7 +6,7 @@ class SubmitController < ApplicationController
   end
 
   def create
-    if is_xml?
+    if xml?
       params[:message] = Nokogiri::XML(request.body.read).xpath('//message').text
     end
 
@@ -20,19 +20,19 @@ class SubmitController < ApplicationController
     @response = {'url': request.base_url + '/message/' + @path}
 
     respond_to do |format|
-      if self.is_xml?
+      if self.xml?
         format.xml {render}
-      elsif self.is_json?
+      elsif self.json?
         format.json {render}
       end
     end
   end
 
-  def is_xml?
+  def xml?
     request.content_type.include? 'xml'
   end
 
-  def is_json?
+  def json?
     request.content_type.include? 'json'
   end
 end
