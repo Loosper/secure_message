@@ -1,0 +1,2 @@
+class RsaKey < ApplicationRecord
+end
