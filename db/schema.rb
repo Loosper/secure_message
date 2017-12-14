@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171029185938) do
+ActiveRecord::Schema.define(version: 20171214150208) do
 
   create_table "messages", force: :cascade do |t|
     t.text "text"
     t.string "link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rsa_keys", force: :cascade do |t|
+    t.bigint "n"
+    t.bigint "e"
+    t.bigint "d"
+    t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

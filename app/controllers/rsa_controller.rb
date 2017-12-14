@@ -1,27 +1,28 @@
 class RsaController < ApplicationController
   def new
-    id = rand(1..10000).to_str
-    Rsa_key.new(
-      params[:n].to_i,
-      params[:e].to_i,
-      params[:d].to_i,
-      id
+    id = rand(1..10000).to_s
+    RsaKey.new(
+      n: params[:n].to_i,
+      e: params[:e].to_i,
+      d: params[:d].to_i,
+      uid: id
     ).save
 
     render plain: id
   end
 
   def show
-    keys = Rsa_key.find_by(id: params[id])
+    keys = RsaKey.find_by(uid: params[:id])
 
     render plain: [keys[:n], keys[:e], keys[:d]]
   end
 
   def create
-    id = rand(1..10000).to_str
+    id = rand(1..10000).to_s
     n, e, d = new_key
+    p new_key
 
-    Rsa_key.new(n, e, d, id).save
+    RsaKey.new(n: n, e: e, d: d, uid: id).save
 
     render plain: id
   end

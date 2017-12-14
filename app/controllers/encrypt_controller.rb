@@ -1,3 +1,5 @@
+require 'openssl'
+
 class EncryptController < ApplicationController
   def create
     cypher = encrypt params[:message]
@@ -6,13 +8,15 @@ class EncryptController < ApplicationController
   end
 
   def encrypt msg
-    key = Rsa_key.find_by(id: params[:id])
+    key = RsaKey.find_by(uid: params[:id])
     @e = key.e.to_i
     @n = key.n.to_i
 
     cypher = []
     msg.bytes.each do |byte|
-      cypher << (byte ** @e) % @n
+      cypher << byte.to_bn.mod_exp(@e, @n).to_s
+      p byte.to_bn.mod_exp(@e, @n).to_s
+      # cypher << (byte ** @e) % @n
     end
 
     # simple padding until i read up on base64

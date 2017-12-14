@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post '/notes/api/', to: 'submit#create'
 
   # rsa homework:
+  # should generate
   post '/rsas/', to: 'rsa#new'
   get '/rsas/', to: 'rsa#create'
   get '/rsas/:id', to: 'rsa#show'

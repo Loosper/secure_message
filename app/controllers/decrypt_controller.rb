@@ -1,3 +1,5 @@
+require 'openssl'
+
 class DecryptController < ApplicationController
   def create
     message = decrypt params[:message]
@@ -6,16 +8,21 @@ class DecryptController < ApplicationController
   end
 
   def decrypt cypher
-    key = Rsa_key.find_by(id: params[:id])
+    key = RsaKey.find_by(uid: params[:id])
     @d = key.d.to_i
     @n = key.n.to_i
 
-    cypher.split ' '
+    cypher = cypher.split ' '
     msg = []
     cypher.each do |byte|
-      msg << (byte ** @d) % @n
+      # p byte
+      # msg << (byte ** @d) % @n
+      # this doesn't work
+      # i fucked it up somehow?
+      msg << byte.to_i.to_bn.mod_exp(@d, @n)
     end
 
-    return msg.map {|let| let.chr}.join
+    return msg.join
+    # return msg.map {|let| let.to_i.chr}.join
   end
 end
