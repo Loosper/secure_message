@@ -15,11 +15,20 @@ class EncryptController < ApplicationController
     cypher = []
     msg.bytes.each do |byte|
       cypher << byte.to_bn.mod_exp(@e, @n).to_s
-      p byte.to_bn.mod_exp(@e, @n).to_s
+      # p byte.to_bn.mod_exp(@e, @n).to_s
       # cypher << (byte ** @e) % @n
     end
 
     # simple padding until i read up on base64
-    return cypher.join(' ')
+    Encrypted.new(uid: id, message: cypher.join(' ')).save
+    return id
+
+    # return cypher.join(' ')
+  end
+
+  def show
+    msg = Encrypted.find_by(uid: params[:msg_id]).message
+
+    render plain: msg
   end
 end

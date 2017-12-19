@@ -1,12 +1,22 @@
+# require "json"
+
 class RsaController < ApplicationController
   def new
     id = rand(1..10000).to_s
-    RsaKey.new(
-      n: params[:n].to_i,
-      e: params[:e].to_i,
-      d: params[:d].to_i,
-      uid: id
-    ).save
+
+    if params[:n] and params[:e] and params[:d]
+      RsaKey.new(
+        n: params[:n].to_i,
+        e: params[:e].to_i,
+        d: params[:d].to_i,
+        uid: id
+      ).save
+    else
+      n, e, d = new_key
+      p new_key
+
+      RsaKey.new(n: n, e: e, d: d, uid: id).save
+    end
 
     render plain: id
   end
@@ -14,18 +24,19 @@ class RsaController < ApplicationController
   def show
     keys = RsaKey.find_by(uid: params[:id])
 
-    render plain: [keys[:n], keys[:e], keys[:d]]
+    # REVIEW
+    render json: [keys[:n], keys[:e], keys[:d]]
   end
 
-  def create
-    id = rand(1..10000).to_s
-    n, e, d = new_key
-    p new_key
-
-    RsaKey.new(n: n, e: e, d: d, uid: id).save
-
-    render plain: id
-  end
+  # def create
+  #   id = rand(1..10000).to_s
+  #   n, e, d = new_key
+  #   p new_key
+  #
+  #   RsaKey.new(n: n, e: e, d: d, uid: id).save
+  #
+  #   render plain: id
+  # end
 
   def egcd(a, b)
     if a == 0

@@ -8,11 +8,11 @@ Rails.application.routes.draw do
   # rsa homework:
   # should generate
   post '/rsas/', to: 'rsa#new'
-  get '/rsas/', to: 'rsa#create'
+  # get '/rsas/', to: 'rsa#create'
   get '/rsas/:id', to: 'rsa#show'
 
-  # store them eventually
-  post '/rsas/:id/enc_message/', to: 'encrypt#create'
-  post '/rsas/:id/dec_message/', to: 'decrypt#create'
-  # get '/rsas/:id/dec_message/:msg_id', to: 'decrypt#show'
+  post '/rsas/:id/encrypt_messages/', to: 'encrypt#create'
+  get '/rsas/:id/encrypt_messages/:msg_id', to: 'encrypt#show'
+  post '/rsas/:id/decrypt_messages/', to: 'decrypt#create'
+  get '/rsas/:id/decrypt_messages/:msg_id', to: 'decrypt#show'
 end

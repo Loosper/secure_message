@@ -8,6 +8,8 @@ class DecryptController < ApplicationController
   end
 
   def decrypt cypher
+    id = rand(1..10000).to_s
+
     key = RsaKey.find_by(uid: params[:id])
     @d = key.d.to_i
     @n = key.n.to_i
@@ -22,7 +24,14 @@ class DecryptController < ApplicationController
       msg << byte.to_i.to_bn.mod_exp(@d, @n)
     end
 
-    return msg.join
+    Decrypted.new(uid: id, message: msg.join).save
+    return id
     # return msg.map {|let| let.to_i.chr}.join
+  end
+
+  def show
+    msg = Decrypted.find_by(uid: params[:msg_id]).message
+
+    render plain: msg
   end
 end
