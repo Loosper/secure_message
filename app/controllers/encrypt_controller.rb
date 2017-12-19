@@ -8,6 +8,8 @@ class EncryptController < ApplicationController
   end
 
   def encrypt msg
+    id = rand(1..10000).to_s
+
     key = RsaKey.find_by(uid: params[:id])
     @e = key.e.to_i
     @n = key.n.to_i

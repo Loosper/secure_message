@@ -1,5 +1,3 @@
-# require "json"
-
 class RsaController < ApplicationController
   def new
     id = rand(1..10000).to_s
@@ -13,7 +11,6 @@ class RsaController < ApplicationController
       ).save
     else
       n, e, d = new_key
-      p new_key
 
       RsaKey.new(n: n, e: e, d: d, uid: id).save
     end
@@ -25,18 +22,8 @@ class RsaController < ApplicationController
     keys = RsaKey.find_by(uid: params[:id])
 
     # REVIEW
-    render json: [keys[:n], keys[:e], keys[:d]]
+    render json: { "n" => keys[:n], "e" => keys[:e], "d" => keys[:d] }
   end
-
-  # def create
-  #   id = rand(1..10000).to_s
-  #   n, e, d = new_key
-  #   p new_key
-  #
-  #   RsaKey.new(n: n, e: e, d: d, uid: id).save
-  #
-  #   render plain: id
-  # end
 
   def egcd(a, b)
     if a == 0
@@ -58,8 +45,8 @@ class RsaController < ApplicationController
 
   def new_key
     # we want them BIG
-    p = 2 ^ rand(100..10000000000000) - 1
-    q = 2 ^ rand(1000..100000000) - 1
+    p = 2 ^ rand(100..10000000) - 1
+    q = 2 ^ rand(1000..10000) - 1
     n = p * q
     tot = (p - 1) * (q - 1)
     e = nil

@@ -16,15 +16,17 @@ class DecryptController < ApplicationController
 
     cypher = cypher.split ' '
     msg = []
+
+    p cypher
     cypher.each do |byte|
       # p byte
       # msg << (byte ** @d) % @n
       # this doesn't work
       # i fucked it up somehow?
-      msg << byte.to_i.to_bn.mod_exp(@d, @n)
+      msg << byte.to_i.to_bn.mod_exp(@d, @n).to_s
     end
 
-    Decrypted.new(uid: id, message: msg.join).save
+    Decrypted.new(uid: id, message: msg.map {|let| let.to_i.chr}.join).save
     return id
     # return msg.map {|let| let.to_i.chr}.join
   end
