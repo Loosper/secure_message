@@ -6,7 +6,8 @@ url=http://localhost:3000
 # url=https://not-secure.herokuapp.com
 
 # id=$(curl -s -X POST "${url}/rsas?n=899&e=11&d=611")
-id=$(curl -s -X POST "${url}/rsas")
+id=$(curl -s -X POST "${url}/rsas?n=3720335745&e=3718836139&d=2975068915")
+# id=$(curl -s -X POST "${url}/rsas")
 # id=3559
 test=hello
 keys=$(curl -s "${url}/rsas/${id}")

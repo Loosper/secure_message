@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   post '/rsas/:id/encrypt_messages/', to: 'encrypt#create'
   get '/rsas/:id/encrypt_messages/:msg_id', to: 'encrypt#show'
+
   post '/rsas/:id/decrypt_messages/', to: 'decrypt#create'
   get '/rsas/:id/decrypt_messages/:msg_id', to: 'decrypt#show'
 end
