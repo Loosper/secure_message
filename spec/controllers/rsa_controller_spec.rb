@@ -12,7 +12,7 @@ RSpec.describe RsaController, type: :controller do
         expect(response.body.to_i).to be_kind_of(Integer)
       end
 
-      it "responds with 200" do
+      it "responds with success" do
         expect(response).to have_http_status(:success)
       end
     end
@@ -24,8 +24,13 @@ RSpec.describe RsaController, type: :controller do
       end
 
       it "doesn't succeed on bad request" do
-        post :new, params: {e: "asd", d: "611"}
-        expect(response).to have_http_status(:success)
+        expect {
+          post :new, params: {e: "asd", d: "asd", n: "asdf"}
+        }.to raise_error(ActionController::BadRequest)
+      end
+
+      it "makes an entry to the databse" do
+        expect { post :new }.to change { RsaKey.count }.by(1)
       end
     end
   end
@@ -39,7 +44,7 @@ RSpec.describe RsaController, type: :controller do
 
     before { get :show, params: { id: key_id } }
 
-    it "responds http success" do
+    it "responds with success" do
       expect(response).to have_http_status(:success)
     end
 

@@ -1,8 +1,20 @@
+# thanks stackOverflow
+class String
+    def is_i?
+       !!(self =~ /\A[-+]?[0-9]+\z/)
+    end
+end
+
 class RsaController < ApplicationController
   def new
     id = rand(1..10000).to_s
 
     if params[:n] and params[:e] and params[:d]
+      if not params[:n].is_i? and not params[:e].is_i? and not params[:d].is_i?
+        puts params[:n], params[:e], params[:d]
+        raise ActionController::BadRequest.new(), "Bad params"
+      end
+
       RsaKey.new(
         n: params[:n].to_i,
         e: params[:e].to_i,
