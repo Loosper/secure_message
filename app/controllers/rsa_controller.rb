@@ -11,7 +11,6 @@ class RsaController < ApplicationController
 
     if params[:n] and params[:e] and params[:d]
       if not params[:n].is_i? and not params[:e].is_i? and not params[:d].is_i?
-        puts params[:n], params[:e], params[:d]
         raise ActionController::BadRequest.new(), "Bad params"
       end
 
@@ -74,5 +73,4 @@ class RsaController < ApplicationController
     d = modinv(e, tot)
     return n, e, d
   end
-
 end
