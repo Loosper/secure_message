@@ -52,4 +52,16 @@ RSpec.describe RsaController, type: :controller do
       expect(JSON.parse response.body).to eql(VALID_KEYS)
     end
   end
+
+  describe "new_key" do
+    let(:controller) { RsaController.new }
+
+    it "returns Integers" do
+      expect(controller.new_key).to all(be_a_kind_of(Integer))
+    end
+
+    it "returns 3 elements" do
+      expect(controller.new_key.length).to be(3)
+    end
+  end
 end
